@@ -1,15 +1,15 @@
 {
   "name": "vanilla-node-blizzard-oauth-example",
   "version": "1.0.0",
-  "description": "",
+  "description": "Example node.js web application using express http framework and node-fetch to consume the Blizzard OAuth API using the Authorization Code flow.",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon -L server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Kevin Viglucci <https://github.com/viglucci>",
+  "license": "MIT",
   "devDependencies": {
     "btoa": "^1.2.1",
     "express": "^4.17.1",
