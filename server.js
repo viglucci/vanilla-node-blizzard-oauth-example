@@ -46,6 +46,13 @@ app.get('/oauth/callback', async (req, res, next) => {
     const oauthResponse = await fetch(TOKEN_ENDPOINT, requestOptions);
     if (oauthResponse.ok) { // res.status >= 200 && res.status < 300
         const responseData = await oauthResponse.json();
+        // do something with the `access_token` from `responseData`
+        // {
+        //     "access_token": "123456789",
+        //     "token_type": "bearer",
+        //     "expires_in": 86399,
+        //     "scope": "wow.profile"
+        // }
         res.json(responseData);
     } else {
         console.log(`Token request failed with "${oauthResponse.statusText}"`);
