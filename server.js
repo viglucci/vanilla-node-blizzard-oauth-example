@@ -4,8 +4,6 @@ const express = require('express');
 const fetch = require('isomorphic-fetch');
 const btoa = require('btoa');
 
-const app = express();
-
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const AUTHORIZE_ENDPOINT = 'https://us.battle.net/oauth/authorize';
@@ -13,6 +11,8 @@ const TOKEN_ENDPOINT = 'https://us.battle.net/oauth/token';
 
 const redirectUri = 'http://localhost:3000/oauth/callback';
 const scopes = ['wow.profile'];
+
+const app = express();
 
 app.get('/', (req, res) => {
     res.send('visit /login to login with Blizzard oauth');
@@ -41,7 +41,7 @@ app.get('/oauth/callback', async (req, res, next) => {
     const requestOptions = {
         method: 'POST',
         body: params,
-        headers,
+        headers
     };
     const oauthResponse = await fetch(TOKEN_ENDPOINT, requestOptions);
     if (oauthResponse.ok) { // res.status >= 200 && res.status < 300
