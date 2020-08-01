@@ -8,19 +8,21 @@ const app = express();
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const AUTHORIZE_ENDPOINT = 'https://us.battle.net/oauth/authorize';
+const TOKEN_ENDPOINT = 'https://us.battle.net/oauth/token';
+
 const redirectUri = 'http://localhost:3000/oauth/callback';
 const scopes = ['wow.profile'];
 
-app.get('/', (req, res, next) => {
+app.get('/', (req, res) => {
     res.send('visit /login to login with Blizzard oauth');
 });
 
-app.get('/login', (req, res, next) => {
+app.get('/login', (req, res) => {
     const scopesString = encodeURIComponent(scopes.join(' '));
     const redirectUriString = encodeURIComponent(redirectUri);
-    const basePath = 'https://us.battle.net/oauth/authorize';
     const authorizeUrl
-        = `${basePath}?client_id=${CLIENT_ID}&scope=${scopesString}&redirect_uri=${redirectUriString}&response_type=code`;
+        = `${AUTHORIZE_ENDPOINT}?client_id=${CLIENT_ID}&scope=${scopesString}&redirect_uri=${redirectUriString}&response_type=code`;
     res.redirect(authorizeUrl);
 });
 
@@ -41,7 +43,7 @@ app.get('/oauth/callback', async (req, res, next) => {
         body: params,
         headers,
     };
-    const oauthResponse = await fetch('https://us.battle.net/oauth/token', requestOptions);
+    const oauthResponse = await fetch(TOKEN_ENDPOINT, requestOptions);
     if (oauthResponse.ok) { // res.status >= 200 && res.status < 300
         const responseData = await oauthResponse.json();
         res.json(responseData);
